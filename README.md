@@ -28,6 +28,6 @@ init()
   foreach ( name in names.items )
   {
     printf( name );
-  }```
+  }
 
-}
+}```

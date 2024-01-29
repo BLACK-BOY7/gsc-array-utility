@@ -2,6 +2,7 @@
 Array utility for gsc
 
 Exemple:
+```cpp
 #include scripts\zm\array_utility;
 
 init()
@@ -27,6 +28,6 @@ init()
   foreach ( name in names.items )
   {
     printf( name );
-  }
+  }```
 
 }

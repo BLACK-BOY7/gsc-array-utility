@@ -1,34 +1,47 @@
 # gsc-array-utility
-Array utility for gsc
+Array utility for GSC.
 
-Exemple:
+# NOTE:
+<p>All the following examples are based on Zombies gamemode.</p>
+
+## Constructor:
+```js
+create_array( items?: any[] ): struct;
+```
+## Example:
 ```cpp
 #include scripts\zm\array_utility;
 
 init()
 {
   names = create_array();
-  names push( "test1" );
-  names push( "test2" );
-
-  foreach ( name in names.items )
+  names push("Hello");
+  foreach( name in names.items )
   {
     printf( name );
   }
+}
+```
+```cpp
+#include scripts\zm\array_utility;
 
-  printf( names index_of( "test1" ) );
+on_player_connected()
+{
+  self endon("end_game");
+  self endon("game_ended");
 
-  has_test2 = names index_of( "test2" ) != -1;
-  printf( ( has_test2 ? "has" : "not has" ) + " the name 'test2'!" );
-
-  names reverse();
-
-  printf( names.length );
-
-  foreach ( name in names.items )
+  for(;;)
   {
-    printf( name );
-  }
+    self waittill("connected", player);
+    players = create_array( level.players );
 
+    index = players index_of( player );
+    printf( "Index of " + player.name + " is " + index );
+  }
+}
+
+init()
+{
+  thread on_player_connected();
 }
 ```

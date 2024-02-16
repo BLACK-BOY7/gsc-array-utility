@@ -4,7 +4,7 @@ Array utility for GSC.
 # Functions:
 ## Constructor
 ```js
-create_array( items?: any[] ): struct("Array");
+create_array( elements?: any[] | struct("Array") ): struct("Array");
 ```
 <p>**Description**: Returns a new struct("Array") (can be used on the methods bellow)</p>
 
@@ -19,6 +19,11 @@ is_array( variable: struct("Array") ): bool;
 struct("Array") index_of( element: any ): number;
 ```
 <p>**Description**: Returns the index of the element.</p>
+
+## join
+```js
+struct("Array") join( delimiter?: string ): string;
+```
 
 ## push
 ```js

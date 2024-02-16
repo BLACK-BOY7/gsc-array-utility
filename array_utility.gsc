@@ -1,44 +1,53 @@
-/**
- * @param {any[]} items
- * @description creates a new array
- * @return {"Array"}
-*/
-create_array(items)
-{
-  if ( !isdefined( items )  )
-    items = [];
+/*
+Array Utility v1.1beta
 
-  if ( !isArray( items ) )
-    items = [];
+A simple and open-source library to improve arrays in GSC.
+*/
+
+/**
+ * @param { any[] | Struct("Array") | undefined } elements
+ * @returns { Struct("Array") }
+ */
+create_array(elements=[])
+{
+  if(!isdefined(elements)) elements = [];
+  if(is_array(elements)) elements = elements.items;
+  if(!isarray(elements)) return "elements must be an array!";
 
   this = SpawnStruct();
   this.__name__ = "Array";
   this.__is_class__ = true;
 
-  this.items = items;
-  this.length = items.size;
+  this.items = [];
+  this.length = 0;
+
+  foreach(value, index in elements)
+  {
+    if(isstring(index)) continue;
+    this.items[this.items.size] = value;
+    this.length = this.items.size;
+  }
 
   return this;
 }
 
 /**
- * @param {any} variable
- * @description checks if the variable is an array
- * @return {boolean}
-*/
+ * @param { * } variable
+ * @returns { boolean }
+ */
 is_array(variable)
 {
-  return !isarray(variable) && isdefined(variable.__is_class__) && isdefined(variable.__name__) && variable.__name__ == "Array";
+  return isdefined(variable) && !isarray(variable) && isdefined(variable.__is_class__) && isdefined(variable.__name__) && variable.__name__ == "Array" && variable.__is_class__;
 }
 
 /**
- * @param {any} element
- * @description returns the index of the element or -1 if not found
- * @return {number}
-*/
+ * @param { * } element
+ * @returns { number }
+ */
 index_of(element)
 {
-  if(!is_array(self)) return -1;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(!isdefined(element)) return "element must be defined!";
 
   for(i = 0; i < self.items.size; i++)
   {
@@ -49,13 +58,35 @@ index_of(element)
 }
 
 /**
- * @param {any} element
- * @description inserts element in array
- * @return {number}
-*/
+ * @param { string } delimiter
+ * @returns { string }
+ */
+join(delimiter="")
+{
+  if(!is_array(self)) return "this function must be called in an array!";
+
+  if(!isstring(delimiter)) return "delimiter must be a string!";
+
+  output = "";
+  first = true;
+
+  foreach(element in self.items)
+  {
+    if(!isstring(element)) continue;
+    output += (first ? "" : delimiter) + element;
+  }
+
+  return output;
+}
+
+/**
+ * @param { * } element
+ * @returns { number }
+ */
 push(element)
 {
-  if(!is_array(self)) return -1;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(!isdefined(element)) return "element must be defined!";
 
   self.items[self.items.size] = element;
   self.length = self.items.size;
@@ -63,13 +94,14 @@ push(element)
 }
 
 /**
- * @param {number} index
- * @description removes an element by index and returns the element
- * @return {any}
-*/
+ * @param { number } index
+ * @returns { * }
+ */
 remove_at(index)
 {
-  if(!is_array(self)) return undefined;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(!isint(index)) return "index must be a integer!";
+
   if(index < 0 || index >= self.items.size) return undefined;
 
   element = self.items[i];
@@ -83,55 +115,53 @@ remove_at(index)
 }
 
 /**
- * @param {any} element
- * @description removes an element
- * @return {any}
-*/
+ * @param { * } element
+ * @returns { void }
+ */
 remove(element)
 {
-  if(!is_array(self)) return;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(!isdefined(element)) return "element must be defined!";
 
   index = index_of(element);
-
-  if(index == -1)
-    return;
-
+  if(index == -1) return;
   remove_at(index);
 }
 
 /**
- * @description removes the last element
- * @return {any}
-*/
+ * @returns { * }
+ */
 pop()
 {
-  if(!is_array(self) || self.items.size == 0) return undefined;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(self.items.size == 0) return undefined;
 
   return remove_at(self.items.size - 1);
 }
 
 /**
- * @description removes the first element
- * @return {any}
-*/
+ * @returns { * }
+ */
 shift()
 {
-  if(!is_array(self) || self.items.size == 0) return undefined;
+  if(!is_array(self)) return "this function must be called in an array!";
+  if(self.items.size == 0) return undefined;
 
   return remove_at(0);
 }
 
 /**
- * @description inverts the array
-*/
+ * @returns { void }
+ */
 reverse()
 {
-  if(!is_array(self)) return;
+  if(!is_array(self)) return "this function must be called in an array!";
 
   for(i = 0; i < floor(self.items.size / 2); i++)
   {
     temp = self.items[i];
     self.items[i] = self.items[self.items.size - 1 - i];
     self.items[self.items.size - 1 - i] = temp;
+    temp = undefined;
   }
 }

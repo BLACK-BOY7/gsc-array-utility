@@ -66,7 +66,7 @@ struct("Array") reverse(): void;
 
 ## Example:
 ```cpp
-#include scripts\zm\array_utility;
+#include scripts\array_utility\src\main;
 
 init()
 {
@@ -79,7 +79,7 @@ init()
 }
 ```
 ```cpp
-#include scripts\zm\array_utility;
+#include scripts\array_utility\src\main;
 
 on_player_connected()
 {

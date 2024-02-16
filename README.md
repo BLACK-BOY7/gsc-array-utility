@@ -10,7 +10,7 @@ create_array( elements?: any[] | struct("Array") ): struct("Array");
 
 ## is_array
 ```js
-is_array( variable: struct("Array") ): bool;
+is_array( variable: any ): bool;
 ```
 <p>**Description**: Returns true if it is an array created by the constructor.</p>
 

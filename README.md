@@ -1,3 +1,6 @@
+# libd3
+<p>Todo o conteúdo a seguir é parte da libd3, biblioteca com códigos prontos para uso, de código aberto</p>
+
 # gsc-array-utility
 Array utility for GSC.
 
